@@ -1,0 +1,120 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, physics, braket, graphicx, wrapfig}
+
+\newcommand{\Ha}[0]{\mathcal{H}}
+
+\title{Uniqueness and completeness of classical spin Hamiltonians}
+\author{Ivo A. Maceira, Mario Geiger}
+
+\begin{document}
+\maketitle
+
+We take a set of $N$ classical spin variables
+$
+s_n = \pm 1,
+$
+which we will conveniently write as
+\begin{equation}
+	s_n \equiv (-1)^{\beta_n},\quad \beta_n = 0,1.
+\end{equation}
+For brevity of notation, we call the ordered set of $\beta$'s as $\beta \equiv (\beta_1,\beta_2,\dots,\beta_N)$.
+Since $s_n^2 = 1$, the most general Hamiltonian written in terms of the $N$ spins has $2^N$ terms and can be written succinctly as
+\begin{equation}
+	\Ha_J(\beta) = \sum_{\{\alpha_n\}} J(\alpha) (-1)^{\sum_{n=1}^{N} \alpha_n \beta_n},
+\end{equation}
+with $\alpha_n = 0,1$ and we sum over all $\{\alpha_n\}$ configurations. We define
+$
+\alpha \equiv (\alpha_1,\alpha_2,\dots\alpha_n),
+$
+and $J$ as the ordered set of $J(\alpha)$ couplings, totaling $2^N$ in number. Note that each ``configuration'' of $\alpha$ corresponds to a unique term of the Hamiltonian while each configuration of $\beta$ gives a unique spin configuration. However, the two sets of configurations are identical, and each Hamiltonian term involves the dot product between two configurations of $0$'s and $1$'s, one from each set.
+
+We wish to prove that two Hamiltonians with different couplings have different spectrums, or equivalently, the correspondence between the set of energies of each configuration and the set of couplings is one to one.
+
+Let us consider that two Hamiltonians $H_J$ and $H_K$ have equal spectrum but possibly different sets of couplings $J$ and $K$,
+\begin{align}
+	&\forall \{\beta_n\}: \Ha_J(\beta) = \Ha_K(\beta) \Leftrightarrow \\
+	&\forall \{\beta_n\}: \sum_{\{\alpha_n\}} [J(\alpha) - K(\alpha)] (-1)^{\sum_{n=1}^{N} \alpha_n \beta_n} = 0,
+	\label{eq:system_eqs}
+\end{align}
+The system of equations~(\ref{eq:system_eqs}) can be written in matrix form as
+\begin{equation}
+	\{\beta_n\}\left.
+	\underset{\{\alpha_n\}}{
+		\left(\begin{matrix}
+			& & \\
+			& (-1)^{\sum_{n=1}^{N} \alpha_n \beta_n} & \\
+			& &
+		\end{matrix}\right)
+		}
+		\right.
+		\left(\begin{matrix}
+		\\
+		J - K \\
+		\left.\right.
+	\end{matrix}\right)
+	=
+	\left(\begin{matrix}
+		0\\
+		0\\
+		\vdots
+	\end{matrix}\right).
+\end{equation}
+Each column of the matrix corresponds to a Hamiltonian term $\{\alpha_n\}$ while each line corresponds to a spin configuration $\{\beta_n\}$. Our claim is that the only solution to the system of equations is $J = K$. To prove this, it suffices to show that the determinant of the matrix is non-zero. We name this matrix as $M$, a $2^N \times 2^N$ matrix where each element is dependent on the dot product of two $0,1$ configurations:
+\begin{equation}
+	M_N(\{\alpha_n\},\{\beta_n\}) \equiv (-1)^{\sum_{n=1}^{N} \alpha_n \beta_n} =\pm 1.
+\end{equation}
+For a given configuration ordering, the smallest $M$ matrix $(N=1)$ is
+\begin{equation}
+	M_1 =
+	\overset{\alpha_1}{
+	\overset{0~ ~ ~ ~1}{
+	\left(\begin{matrix}
+		1 & 1 \\
+		1 & -1
+	\end{matrix}\right)
+	}}
+	\begin{matrix}
+		 0 \\
+		 1
+	\end{matrix}
+	\begin{matrix}
+		  \\
+		 \beta_1\\
+		 \left. \right.
+	\end{matrix}
+\end{equation}
+with $\det(M_1) = -2$. Bigger matrices can be constructed recursively, noting that
+\begin{align}
+	M_N(\{\alpha_n\},\{\beta_n\}) &= (-1)^{\sum_{n=1}^{N-1} \alpha_n \beta_n} (-1)^{\alpha_N \beta_N}\\
+	&= (-1)^{\alpha_N \beta_N} M_{N-1}(\{\alpha_n\} \setminus \alpha_N,\{\beta_n\} \setminus \beta_N),
+\end{align}
+which results in the matrix recursion
+\begin{equation}
+	M_N(\{\alpha_n\},\{\beta_n\}) =
+	\overset{\alpha_N}{
+	\overset{0~ ~ ~ ~ ~ ~ ~ ~ ~1}{
+	\left(\begin{matrix}
+		M_{N-1} & M_{N-1} \\
+		M_{N-1} & -M_{N-1}
+	\end{matrix}\right)
+	}}
+	\begin{matrix}
+		 0 \\
+		 1
+	\end{matrix}
+	\begin{matrix}
+		  \\
+		 \beta_N\\
+		 \left. \right.
+	\end{matrix}
+\end{equation}
+The determinant can then be obtained recursively from Schur's determinant identity, giving
+\begin{equation}
+	\det(M_N) = (-2)^{2^{N-1}} \det(M_{N-1})^2,
+\end{equation}
+therefore non-zero, thus proving our point.
+
+\end{document}
